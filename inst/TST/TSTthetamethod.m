@@ -105,6 +105,9 @@ function out = TSTthetamethod(outstruct, x, t, tol, maxit, dmp, theta,
       UTLplotbyname(t(1:it),out(:,1:it),outstruct,pltvars), pause(.1)
     endif
     
+    if exist("~/.stop_ocs","file")
+      break
+    end
   endfor
 
 endfunction

@@ -40,17 +40,18 @@
 ##
 ## Parameters for all the above models are:
 ## @itemize
-## @item rd  -> parasitic resistance between drain and source
-## @item W   -> MOSFET width
-## @item L   -> channel length
-## @item mu0 -> reference value for mobility
-## @item Vth -> threshold voltage
-## @item Cox -> oxide capacitance
-## @item Cgs -> gate-source capacitance
-## @item Cgd -> gate-drain capacitance
-## @item Cgb -> gate-bulk capacitance
-## @item Csb -> source-bulk capacitance
-## @item Cdb -> drain-bulk capacitance
+## @item rd     -> parasitic resistance between drain and source
+## @item W      -> MOSFET width
+## @item L      -> channel length
+## @item mu0    -> reference value for mobility
+## @item Vth    -> threshold voltage
+## @item Cox    -> oxide capacitance
+## @item Cgs    -> gate-source capacitance
+## @item Cgd    -> gate-drain capacitance
+## @item Cgb    -> gate-bulk capacitance
+## @item Csb    -> source-bulk capacitance
+## @item Cdb    -> drain-bulk capacitance
+## @item Tshift -> shift for reference temperature on MOSFETs (default 0)
 ## @end itemize
 ##
 ## @seealso{ PRSiffparse, ASMinitsystem, ASMbuildsystem, the IFF file
@@ -69,6 +70,7 @@ function [a,b,c]= Mschichmanhodgesmosfet (string,parameters,parameternames,extva
       Cox  = 1e-9;
       Cgb  = Cox;
       Cgs=Cgd=Csb=Cdb=.1*Cox;
+      Tshift = 0;
 
       for ii=1:length(parameternames)
 	eval([parameternames{ii} "=",...
@@ -76,7 +78,7 @@ function [a,b,c]= Mschichmanhodgesmosfet (string,parameters,parameternames,extva
       endfor
 
       [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = \
-	  nmos(extvar,mu0,Cox,W,L,Vth,rd);
+	  nmos(extvar,mu0,Cox,W,L,Vth,rd,Tshift);
       
       vg   = extvar(1);
       vs   = extvar(2);
@@ -151,7 +153,7 @@ function [a,b,c]= Mschichmanhodgesmosfet (string,parameters,parameternames,extva
       endfor
 
       [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = \
-	  pmos(extvar,mu0,Cox,W,L,Vth,rd);
+	  pmos(extvar,mu0,Cox,W,L,Vth,rd,Tshift);
 
       
       vg   = extvar(1);
@@ -227,7 +229,7 @@ function [a,b,c]= Mschichmanhodgesmosfet (string,parameters,parameternames,extva
       endfor
 
       [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = \
-	  nmos(extvar,mu0,Cox,W,L,Vth,rd);
+	  nmos(extvar,mu0,Cox,W,L,Vth,rd,Tshift);
       
       vg   = extvar(1);
       vs   = extvar(2);
@@ -301,7 +303,7 @@ function [a,b,c]= Mschichmanhodgesmosfet (string,parameters,parameternames,extva
       endfor
       
       [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = \
-	  pmos(extvar,mu0,Cox,W,L,Vth,rd);
+	  pmos(extvar,mu0,Cox,W,L,Vth,rd,Tshift);
 
       vg   = extvar(1);
       vs   = extvar(2);
@@ -376,7 +378,7 @@ function [a,b,c]= Mschichmanhodgesmosfet (string,parameters,parameternames,extva
       endfor
 
       [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = \
-	  nmos(extvar,mu0,Cox,W,L,Vth,rd);
+	  nmos(extvar,mu0,Cox,W,L,Vth,rd,Tshift);
       
       vg   = extvar(1);
       vs   = extvar(2);
@@ -451,7 +453,7 @@ function [a,b,c]= Mschichmanhodgesmosfet (string,parameters,parameternames,extva
       endfor
 
       [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = \
-	  pmos(extvar,mu0,Cox,W,L,Vth,rd);
+	  pmos(extvar,mu0,Cox,W,L,Vth,rd,Tshift);
 
       vg   = extvar(1);
       vs   = extvar(2);
@@ -515,7 +517,7 @@ function [a,b,c]= Mschichmanhodgesmosfet (string,parameters,parameternames,extva
 
 endfunction
 
-function [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = nmos(extvar,mu0,Cox,W,L,Vth,rd)
+function [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = nmos(extvar,mu0,Cox,W,L,Vth,rd,Tshift)
   ##Computes values for nmos case
   
   vg   = extvar(1);
@@ -523,9 +525,9 @@ function [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = nmos(extvar,mu0,Cox,W,L,Vth,rd)
   vd   = extvar(3);
   vb   = extvar(4);
   T    = max(extvar(5),0);
-  
-  k    = mu0*Cox*(T/300)^(-3/2)*W/L;
-  dkdT = mu0*Cox*W*(-3/2)*(T/300)^(-5/2)*(1/300)/L;
+
+  k    = mu0*Cox*((T + Tshift)/300)^(-3/2)*W/L;
+  dkdT = mu0*Cox*W*(-3/2)*((T + Tshift)/300)^(-5/2)*(1/300)/L;
   
   vgs  = vg-vs;
   vds  = vd-vs;
@@ -567,7 +569,7 @@ function [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = nmos(extvar,mu0,Cox,W,L,Vth,rd)
 
 endfunction
 
-function [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = pmos(extvar,mu0,Cox,W,L,Vth,rd)
+function [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = pmos(extvar,mu0,Cox,W,L,Vth,rd,Tshift)
   ##Computes values for pmos case
 
   vg   = extvar(1);
@@ -576,8 +578,8 @@ function [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = pmos(extvar,mu0,Cox,W,L,Vth,rd)
   vb   = extvar(4);
   T    = extvar(5);
 
-  k    = - mu0 * Cox * (T/300)^(-3/2) *W/L;
-  dkdT = - mu0 * Cox * W *(-3/2)*(T/300)^(-5/2)*(1/300)/L;
+  k    = - mu0 * Cox * ((T + Tshift)/300)^(-3/2) *W/L;
+  dkdT = - mu0 * Cox * W *(-3/2)*((T + Tshift)/300)^(-5/2)*(1/300)/L;
   
   vgs  = vg-vs;
   vds  = vd-vs;

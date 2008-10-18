@@ -6,17 +6,8 @@ Netlist Parsing Functions
   PRSIFFparse
 Time Stepping Functions
   TSTbweuler
-  TSTBWEFUNJAC0
-  TSTBWEFUNJAC1
-  TSTBWEFUNRES0
-  TSTBWEFUNRES1
-  TSTBWEFUNUP1
   TSTdaspk
-  TSTDASPKFUNJAC
-  TSTDASPKFUNRES
   TSTthetamethod
-  TSTTHETAFUNJAC1
-  TSTTHETAFUNRES1
 Non Linear Solvers
   NLSstationary
   NLSnewtonraphson
@@ -28,9 +19,7 @@ SuBNet Function Library
   Mcurrentsources
   Mdiode
   Minductors
-  Mnmoscap
   Mnmosfet
-  Mpdesympnjunct
   Mpmosfet
   Mresistors
   Mschichmanhodgesmosfet

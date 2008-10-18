@@ -20,7 +20,7 @@
 ## author: culpo@math.uni-wuppertal.de
 
 ## -*- texinfo -*-
-## @deftypefn{Function File} [@var{A}, @var{Jac}, @var{res} ] = @ 
+## @deftypefn{Function File} [@var{A}, @var{Jac}, @var{res} ] = @
 ## ASMbuildsystem (@var{instruct}, @var{x}, @var{t})
 ##
 ## Cycles through the circuit description structure @var{instruct} 
