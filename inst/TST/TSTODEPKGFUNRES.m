@@ -1,4 +1,4 @@
-## Copyright (C) 2008  Carlo de Falco            
+## Copyright (C) 2006,2007,2008  Carlo de Falco            
 ##
 ## This file is part of:
 ## OCS - A Circuit Simulator for Octave
@@ -16,24 +16,23 @@
 ## along with this program (see the file LICENSE); if not,
 ## see <http://www.gnu.org/licenses/>.
 ##
-## author: carlo.defalco@gmail.com
+## author: carlo.defalco@gmail.com 
 
 ## -*- texinfo -*-
 ##
 ## @deftypefn{Function File} @
-## {[@var{lhs}]=} TSTTHETAFUNJAC1@
-## (@var{outstruct}, @var{x}, @var{t0}, @var{t1}, @var{A0}, @var{B}, @
-## @var{theta}, @var{A1}, @var{Jac}, @var{res})
+## {[@var{rhs}]=} TSTODEPKGFUNRES@
+## (@var{outstruct}, @var{x}, @var{A0}, @var{B}, @var{C}, @var{t})
 ##
-## INTERNAL FUNCTION: NOT SUPPOSED TO BE CALLED DIRECTLY BY USERS
+## INTERNAL FUNCTION:
+##
+## NOT SUPPOSED TO BE CALLED DIRECTLY BY USERS
 ## @end deftypefn
 
-function lhs = TSTTHETAFUNJAC1(outstruct, x, t0, t1, A0, B, theta, A1, Jac, res)
-
-  DT = t1-t0;
-  if ( nargin < 10 )
-    [A1,Jac,res] = ASMbuildsystem(outstruct,x,t1); 
-  endif
-  lhs = ( (A0+A1)/DT + theta*(B + Jac) ); 
+function rhs = TSTODEPKGFUNRES(outstruct,x,A0,B,C,t)
+  
+  [A1,Jac,res] = ASMbuildsystem(outstruct,x,t);
+  rhs =  B*x + C + res; 
 
 endfunction
+

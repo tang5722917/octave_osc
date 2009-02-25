@@ -146,6 +146,7 @@ function [a,b,c]= Mschichmanhodgesmosfet (string,parameters,parameternames,extva
       Cox  = 1e-9;
       Cgb=Cox;
       Cgs=Cgd=Csb=Cdb=.1*Cox;
+      Tshift = 0;
 
       for ii=1:length(parameternames)
 	eval([parameternames{ii} "=",...

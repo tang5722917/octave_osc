@@ -8,6 +8,7 @@ Time Stepping Functions
   TSTbweuler
   TSTdaspk
   TSTthetamethod
+  TSTodepkg
 Non Linear Solvers
   NLSstationary
   NLSnewtonraphson
