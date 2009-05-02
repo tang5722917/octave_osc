@@ -16,7 +16,7 @@
 ## along with this program (see the file LICENSE); if not,
 ## see <http://www.gnu.org/licenses/>.
 ##
-## author: carlo.defalco@gmail.com, culpo@math.uni-wuppertal.de
+## author: Carlo de Falco <cdf _AT_ users.sourceforge.net>, culpo@math.uni-wuppertal.de
 
 ## -*- texinfo -*-
 ##

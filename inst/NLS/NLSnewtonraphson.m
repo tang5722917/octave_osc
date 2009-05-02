@@ -16,7 +16,7 @@
 ## along with this program (see the file LICENSE); if not,
 ## see <http://www.gnu.org/licenses/>.
 ##
-## author: carlo.defalco@gmail.com 
+## author: Carlo de Falco <cdf _AT_ users.sourceforge.net> 
 
 ## -*- texinfo -*-
 ##  @deftypefn{Function File}{[@var{y},@var{numit},@var{resnrm}] =} @
