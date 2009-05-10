@@ -84,7 +84,7 @@ function [out, varargout] = TSTbweuler(outstruct,x,t,tol,maxit,dmp,pltvars,verbo
   endif
   
   
-  [A0,B,C,outstruct] = ASMinitsystem(outstruct,x,t(1));
+  [A0,B,C,outstruct] = ASMinitsystem(outstruct,x);
   
   if (nargin > 8)
     JAC = @(x) dae_fun{1}(outstruct,x,t(1),B);
