@@ -42,9 +42,9 @@
 function  [A,Jac,res] = ASMbuildsystem(instruct,x,t);
 
   n = instruct.totextvar+instruct.totintvar;
-  A = spalloc(n,n,0);
-  Jac = spalloc(n,n,0);
-  res = spalloc(n,1,0);
+  A = sparse(n,n);
+  Jac = sparse(n,n);
+  res = sparse(n,1);
   
   
   ## NLC section
@@ -82,26 +82,21 @@ function  [A,Jac,res] = ASMbuildsystem(instruct,x,t);
       ## local indexing
       lclvars = [nzil; instruct.NLC(ibl).nextvar + (1:length(intvars))' ];
       ## reshaping sparse stamps
-      [atmp,btmp,ctmp,mm,nn] = shape(a,b,c,vars,lclvars);
-      ## stamping
-      A   += sparse(nn,mm,atmp,n,n);
-      Jac += sparse(nn,mm,btmp,n,n);
-      res += sparse(vars,1,ctmp,n,1);
+      a = a(lclvars,lclvars);
+      b = b(lclvars,lclvars);
+      c = reshape(c(lclvars),[],1);
       
+      [na,ma,va] = find(a);
+      [nb,mb,vb] = find(b);
+      [nc,mc,vc] = find(c);
+
+      ## stamping
+      A   += sparse(vars(na),vars(ma),va,n,n);
+      Jac += sparse(vars(nb),vars(mb),vb,n,n);
+      res += sparse(vars(nc),1,vc,n,1);
+     
     endfor	
   endfor
   
-  
-endfunction
 
-function [aout,bout,cout,mm,nn] = shape(ain,bin,cin,vars,lclvars)
-## reshapes input in a form suitable for "sparse" function
- 
-  [mm, nn] = meshgrid(vars);
-  nn       = reshape(nn,[],1);
-  mm       = reshape(mm,[],1);
-  aout     = reshape(ain(lclvars,lclvars),[],1);
-  bout     = reshape(bin(lclvars,lclvars),[],1);
-  cout     = reshape(cin(lclvars),[],1);
-  
 endfunction
