@@ -200,7 +200,7 @@ function outstruct = PRSIFFparse(name)
     [ns,cnt] = fscanf(fid,"%s","C");
     if cnt
       outstruct.namesn(++nnames)=nn;
-      outstruct.namess(nnames)=ns;
+      outstruct.namess{nnames}=ns;
     endif
   endwhile
   
