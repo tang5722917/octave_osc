@@ -1,5 +1,5 @@
 function [a,b,c] =...
-      Minductorstors(string,parameters,parameternames,extvar,intvar,t)
+      Minductors(string,parameters,parameternames,extvar,intvar,t)
   
   ## Minductors(string,parameters,parameternames,extvar,intvar,t)
 

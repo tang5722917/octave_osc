@@ -1,20 +1,20 @@
 OCS >> Octave Circuit Simulator
 Matrix Assembly Functions
-  ASMinitsystem
-  ASMbuildsystem
+  asm_initialize_system
+  asm_build_system
 Netlist Parsing Functions
-  PRSIFFparse
+  prs_iff
 Time Stepping Functions
-  TSTbweuler
-  TSTdaspk
-  TSTthetamethod
-  TSTodepkg
+  tst_backward_euler
+  tst_daspk
+  tst_theta_method
+  tst_odepkg
 Non Linear Solvers
-  NLSstationary
-  NLSnewtonraphson
-Miscellaneous Utility Functions
-  UTLplotbyname
-  UTLsbnserver
+  nls_stationary
+  nls_newton_raphson
+UTiLity Functions
+  utl_plot_by_name
+  utl_sbn_server
 SuBNet Function Library 
   Mcapacitors
   Mcurrentsources
@@ -23,6 +23,6 @@ SuBNet Function Library
   Mnmosfet
   Mpmosfet
   Mresistors
-  Mschichmanhodgesmosfet
+  Mshichmanhodgesmosfet
   Mvoltagesources
 

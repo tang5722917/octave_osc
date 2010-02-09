@@ -1,8 +1,10 @@
-dirlist= {"UTL","ASM","TST","NLS","PRS","SBN"};
+dirlist        = {"utl","asm","tst","nls","prs","sbn"};
+[basename,dir] = fileparts(fileparts (mfilename ("fullpath")));
+
 for ii=1:length(dirlist)
-  if (! exist (fullfile (fileparts (mfilename ("fullpath")), "inst"), "dir"))
+  if (! exist (fullfile (basename, "inst"), "dir"))
     ## Run this if the package is installed
-    addpath ( [ fileparts( mfilename("fullpath")) "/" dirlist{ii}])
+    addpath ( [ basename "/" dirlist{ii}],"-end")
   else
     ## Run this if we are testing the package is installed without installation
     addpath ( [ fileparts( mfilename("fullpath")) "/inst/" dirlist{ii}])
