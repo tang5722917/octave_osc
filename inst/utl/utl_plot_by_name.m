@@ -35,24 +35,25 @@
 ##
 ## @end deftypefn
 
-function utl_plot_by_name(t,out,outstruct,namelist)
+function utl_plot_by_name (t, out, outstruct, namelist)
   
-  if nargin != 4
-    error("utl_plot_by_name: wrong number of input parameters.")
+  if (nargin != 4)
+    error ("utl_plot_by_name: wrong number of input parameters.")
   endif
 
-  nn = length(outstruct.namesn);
-  
+  nn  = length (outstruct.namesn);
+  leg = {};
   for ip = 1:nn
-    for in = 1:length(namelist)
-      if strcmp(namelist{in},outstruct.namess{ip})
-	plot(t,out(outstruct.namesn(ip),:),\
-	     [sprintf('%d',mod(in+1,6)+1) ";" outstruct.namess{ip} ";"]);
+    for in = 1:length (namelist)
+      if (strcmp (namelist{in},outstruct.namess{ip}))
+	plot (t, out(outstruct.namesn(ip), :), sprintf("%d", mod (in+1, 6) + 1));
+        leg{in} = outstruct.namess{ip};
 	hold on
       endif
     endfor
   endfor
-  
+  legend (leg{:});
+
   hold off
 
 endfunction
