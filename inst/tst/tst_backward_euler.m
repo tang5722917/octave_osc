@@ -1,4 +1,4 @@
-## Copyright (C) 2006,2007,2008  Carlo de Falco            
+## Copyright (C) 2006,2007,2008,2011  Carlo de Falco            
 ##
 ## This file is part of:
 ## OCS - A Circuit Simulator for Octave
@@ -63,56 +63,55 @@
 ##
 ## @end deftypefn
 
-function [out, varargout] = tst_backward_euler(outstruct,x,t,\
-					       tol,maxit,pltvars,verbosity,dae_fun)
+function [out, varargout] = tst_backward_euler (outstruct, x, t, tol, maxit, pltvars, verbosity, dae_fun)
 
   ## Check input
   ## FIXME: add input check!
   if ((nargin < 6) || (nargin > 8))
-    error("tst_backward_euler: wrong number of input parameters.");
+    error ("tst_backward_euler: wrong number of input parameters.");
   endif
 
-  if ~exist("verbosity")
+  if ~exist ("verbosity")
     verbosity = [0,0];
-  elseif length(verbosity)<2
-    verbosity(2) =0;
+  elseif (length (verbosity) < 2)
+    verbosity(2) = 0;
   endif
   
-  out      = zeros(rows(x),columns(t));
+  out      = zeros (rows (x), columns (t));
   out(:,1) = x;
   
   if nargout > 1
-    niter = zeros(length(t),1);
+    niter = zeros (length(t),1);
   endif
 
   if (verbosity(1))
-    fprintf(1,"Initial value.\n");
+    fprintf (1, "Initial value.\n");
   endif
   
   
-  [A0,B,C] = asm_initialize_system(outstruct,x);
+  [A0, B, C] = asm_initialize_system (outstruct, x);
   
   if (nargin > 8)
-    JAC = @(x) dae_fun{1}(outstruct,x,t(1),B);
-    RES = @(x) dae_fun{2}(outstruct,x,t(1),B,C);
-    [out(:,1),ii,resnrm] = nls_newton_raphson(x,RES,JAC,tol,maxit,verbosity(1));
+    JAC = @(x) dae_fun{1} (outstruct,x,t(1),B);
+    RES = @(x) dae_fun{2} (outstruct,x,t(1),B,C);
+    [out(:,1), ii, resnrm] = nls_newton_raphson (x, RES, JAC, tol, maxit, verbosity(1));
   else
-    [out(:,1),ii] = nls_stationary(outstruct,x,tol,maxit);    
+    [out(:,1),ii] = nls_stationary (outstruct, x, tol, maxit);    
   endif
   
-  if nargout > 1
+  if (nargout > 1)
     niter(1) = ii;
   endif
   
-  for it=2:length(t)
+  for it = 2:length (t)
 
     if (verbosity(1))
-      fprintf(1,"Timestep #%d.\n",it);
+      fprintf (1,"Timestep #%d.\n",it);
     endif
 
     if nargin > 8
-      JAC = @(x) dae_fun{3}(outstruct,x,t(it-1),t(it),A0,B);
-      RES = @(x) dae_fun{4}(outstruct,x,out(:,it-1),t(it-1),t(it),A0,B,C);
+      JAC = @(x) dae_fun{3} (outstruct, x, t(it-1), t(it), A0, B);
+      RES = @(x) dae_fun{4} (outstruct, x, out(:,it-1), t(it-1), t(it), A0, B, C);
     else
       JAC = @(x,A1,Jac,res) TSTBWEFUNJAC1(outstruct, x, t(it-1), 
 					  t(it), A0, B, A1, Jac, res);
@@ -122,15 +121,15 @@ function [out, varargout] = tst_backward_euler(outstruct,x,t,\
       UPDT = @(x) TSTBWEFUNUP1 (outstruct, x, t(it));
     endif
 
-    [out(:,it),ii,resnrm] = \
-	nls_newton_raphson(out(:,it-1),RES,JAC,tol,maxit,verbosity(1),UPDT);
+    [out(:,it),ii,resnrm] = nls_newton_raphson (out(:,it-1), RES, JAC, tol, maxit, verbosity(1), UPDT);
 
     if nargout > 1
       niter(it) = ii;
     endif
     
     if (verbosity(2))
-     utl_plot_by_name(t(1:it),out(:,1:it),outstruct,pltvars), pause(.01)
+     utl_plot_by_name (t(1:it), out(:,1:it), outstruct, pltvars);
+     drawnow ();
     endif
   
     ## Stop at runtime
@@ -150,29 +149,31 @@ function [out, varargout] = tst_backward_euler(outstruct,x,t,\
 endfunction
 
 ## Jacobian for transient problem
-function lhs = TSTBWEFUNJAC1(outstruct,x,t0,t1,A0,B,A1,Jac,res)
+function lhs = TSTBWEFUNJAC1 (outstruct, x, t0, t1, A0, B, A1, Jac, res)
 
   DT = t1-t0;
-  if ( nargin < 9 )
-    [A1,Jac,res] = asm_build_system(outstruct,x,t1); 
+  if (nargin < 9)
+    [A1, Jac, res] = asm_build_system (outstruct, x, t1); 
   endif
-  lhs = ( (A0+A1)/DT + B + Jac); 
+  lhs = ((A0+A1)/DT + B + Jac); 
 
 endfunction
+
 ## Residual for transient problem
-function rhs = TSTBWEFUNRES1(outstruct,x,xold,t0,t1,A0,B,C,A1,Jac,res)
+function rhs = TSTBWEFUNRES1 (outstruct, x, xold, t0, t1, A0, B, C, A1, Jac, res)
 
   DT = t1-t0;
   if ( nargin < 11 )
-    [A1,Jac,res] = asm_build_system(outstruct,x,t1); 
+    [A1, Jac, res] = asm_build_system (outstruct, x, t1); 
   endif
-  rhs = (res + C + B*x + (A0+A1)*(x-xold)/DT );
+  rhs = (res + C + B*x + (A0+A1)*(x-xold)/DT);
 
 endfunction
-## Update for transient problem
-function update = TSTBWEFUNUP1(outstruct,x,t1)
 
-  [A1,Jac,res] = asm_build_system(outstruct,x,t1);
-  update = {A1,Jac,res};
+## Update for transient problem
+function update = TSTBWEFUNUP1 (outstruct, x, t1)
+
+  [A1, Jac, res] = asm_build_system (outstruct, x, t1);
+  update = {A1, Jac, res};
 
 endfunction
