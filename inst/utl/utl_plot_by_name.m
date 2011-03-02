@@ -42,12 +42,12 @@ function utl_plot_by_name (t, out, outstruct, namelist)
   endif
 
   nn  = length (outstruct.namesn);
-  leg = {};
+  leg = {}; ileg = 0;
   for ip = 1:nn
     for in = 1:length (namelist)
       if (strcmp (namelist{in},outstruct.namess{ip}))
 	plot (t, out(outstruct.namesn(ip), :), sprintf("%d", mod (in+1, 6) + 1));
-        leg{in} = outstruct.namess{ip};
+        leg{++ileg} = outstruct.namess{ip};
 	hold on
       endif
     endfor
