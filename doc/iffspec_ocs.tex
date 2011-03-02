@@ -22,6 +22,9 @@
 \newcommand{\mylisting}[1]{\hypertarget{listing:#1}%
 {{\sffamily\bfseries\large file : #1 \normalfont}}%
 \null\lstinputlisting[]{#1}}
+\newcommand{\mylistingm}[1]{\hypertarget{listing:#1.m}%
+{{\sffamily\bfseries\large file : #1.m \normalfont}}%
+\null\lstinputlisting[]{#1.m.m}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title{IFF version 0.1b1 File Format Specification}
@@ -548,13 +551,13 @@ outstruct.LCR =
 
 \subsubsection{{\sbn} Files }
 
-\mylisting{Mvoltagesources.m}
-\mylisting{Mcurrentsources.m}
-\mylisting{Mresistors.m}
-\mylisting{Mnmosfet.m}
-\mylisting{Mpmosfet.m}
-\mylisting{Minductors.m}
-\mylisting{Mcapacitors.m}
+\mylistingm{Mvoltagesources}
+\mylistingm{Mcurrentsources}
+\mylistingm{Mresistors}
+\mylistingm{Mnmosfet}
+\mylistingm{Mpmosfet}
+\mylistingm{Minductors}
+\mylistingm{Mcapacitors}
 
 \subsubsection{{\cir} and {\nms} Files}
 
@@ -573,17 +576,17 @@ outstruct.LCR =
 
 \subsubsection{Example Parser and Matrix Asembler}
 
-\mylisting{parseIFF.m}
-\mylisting{initsystemIFF.m}
-\mylisting{buildsystemIFF.m}
+\mylistingm{parseIFF}
+\mylistingm{initsystemIFF}
+\mylistingm{buildsystemIFF}
 
 \subsubsection{Example Transient Simulations}
 
-\mylisting{runme.m}
-\mylisting{runmedaspk.m}
-\mylisting{plotbynameIFF.m}
-\mylisting{funres.m}
-\mylisting{funjac.m}
+\mylistingm{runme}
+\mylistingm{runmedaspk}
+\mylistingm{plotbynameIFF}
+\mylistingm{funres}
+\mylistingm{funjac}
 
  
 \end{document}
