@@ -249,14 +249,14 @@ function [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = nmos(extvar,mu0,Cox,W,L,Vth,rd,
     ids = vds*gd;
     didT= 0;
     
-  elseif ((vgs-Vth)>=(vds))&(vds>=0)
+  elseif (((vgs-Vth) >= (vds)) && (vds >= 0))
     
     ids = k*((vgs-Vth)*vds-(vds^2)/2)+vds/rd;
     gm  = k*vds;
     gd  = k*(vgs-Vth-vds) + 1/rd;
     didT= dkdT*((vgs-Vth)*vds-(vds^2)/2);
     
-  elseif ((vgs-Vth)>=(vds))&(vds<0)
+  elseif (((vgs-Vth) >= (vds)) && (vds < 0))
     
     gm  = 0;
     gd  = 1/rd;
@@ -301,14 +301,14 @@ function [gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = pmos(extvar,mu0,Cox,W,L,Vth,rd,
     ids = vds*gd;
     didT= 0;
 
-  elseif ((vgs-Vth)<=(vds))&(vds<=0)
+  elseif (((vgs-Vth) <= (vds)) && (vds <= 0))
     
     ids = k*((vgs-Vth)*vds-(vds^2)/2)+vds/rd;
     gm  = k*vds;
     gd  = k*(vgs-Vth-vds)+1/rd;
     didT= dkdT*((vgs-Vth)*vds-(vds^2)/2);
 
-  elseif ((vgs-Vth)<=(vds))&(vds>0)
+  elseif (((vgs-Vth) <= (vds)) && (vds > 0))
     
     gm  = 0;
     gd  = 1/rd;

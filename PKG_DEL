@@ -1,12 +1,15 @@
-dirlist        = {"utl","asm","tst","nls","prs","sbn"};
-[basename,dir] = fileparts(fileparts (mfilename ("fullpath")));
+dirlist = {"utl", "asm", "tst", "nls", "prs", "sbn"};
+dirname = fileparts (canonicalize_file_name (mfilename ("fullpath")));
 
-for ii=1:length(dirlist)
-  if (! exist (fullfile (basename, "inst"), "dir"))
+for ii=1:length (dirlist)
+  if (! exist (fullfile (dirname, "inst"), "dir"))
     ## Run this if the package is installed
-    rmpath ( [ basename "/" dirlist{ii}])
+    rmpath ( [ dirname "/../" dirlist{ii}])
   else
-    ## Run this if we are testing the package is installed without installation
-    rmpath ( [ fileparts( mfilename("fullpath")) "/inst/" dirlist{ii}])
+    ## Run this if we are testing the package without installation
+    rmpath ([ dirname "/inst/" dirlist{ii}])
+    rmpath ([ dirname "/src/"])
   end
 end
+
+clear dirlist dirname

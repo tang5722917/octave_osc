@@ -84,13 +84,13 @@ function [a,b,c]=Mnmosfet(string,parameters,parameternames,extvar,intvar,t)
 	gd = 1/rd;
 	id = vds*gd;
 	
-      elseif ((vgs-Vth)>=(vds))&(vds>=0)
+      elseif (((vgs-Vth) >= (vds)) && (vds>=0))
 	
 	id = k*((vgs-Vth)*vds-(vds^2)/2)+vds/rd;
 	gm = k*vds;
 	gd = k*(vgs-Vth-vds)+1/rd;
 
-      elseif ((vgs-Vth)>=(vds))&(vds<0)
+      elseif (((vgs-Vth) >= (vds)) && (vds<0))
 	
 	gm = 0;
 	gd = 1/rd;
