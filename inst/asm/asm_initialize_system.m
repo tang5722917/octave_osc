@@ -84,10 +84,10 @@ function  [A,B,C] = asm_initialize_system(instruct,x);
       y(nzil) = x(il(nzil));
       z       = x(intvars);
       
-      [a,b,c] = feval(instruct.LCR(ibl).func,\
-		      instruct.LCR(ibl).section,\
-		      instruct.LCR(ibl).pvmatrix(iel,:),\
-		      instruct.LCR(ibl).parnames,\
+      [a,b,c] = feval(instruct.LCR(ibl).func,
+		      instruct.LCR(ibl).section,
+		      instruct.LCR(ibl).pvmatrix(iel,:),
+		      instruct.LCR(ibl).parnames,
 		      y,z,0);
       
       ## Assemble matrices
