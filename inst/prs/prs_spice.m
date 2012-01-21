@@ -1,30 +1,136 @@
 ## Copyright (C) 2012  Marco Merlin
 ##
-## This file is part of:
-##  SPICE2OCS
+## This file is part of: 
+## OCS - A Circuit Simulator for Octave
 ##
-##  SPICE2OCS  is free software; you can redistribute it and/or modify
-##  it under the terms of the GNU General Public License as published by
-##  the Free Software Foundation; either version 2 of the License, or
-##  (at your option) any later version.
+## OCS  is free software; you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation; either version 2 of the License, or
+## (at your option) any later version.
 ##
-##  BIM is distributed in the hope that it will be useful,
-##  but WITHOUT ANY WARRANTY; without even the implied warranty of
-##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-##  GNU General Public License for more details.
+## OCS is distributed in the hope that it will be useful,
+## but WITHOUT ANY WARRANTY; without even the implied warranty of
+## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+## GNU General Public License for more details.
 ##
-##  You should have received a copy of the GNU General Public License
-##  along with BIM; If not, see <http://www.gnu.org/licenses/>.
+## You should have received a copy of the GNU General Public License
+## along with OCS; If not, see <http://www.gnu.org/licenses/>.
 ##
-##  author: Marco Merlin <marcomerli _AT_ gmail.com>
-##  based on prs_iff which is (C) Carlo de Falco and Massimiliano Culpo
+## author: Marco Merlin <marcomerli _AT_ gmail.com>
+## based on prs_iff which is (C) Carlo de Falco and Massimiliano Culpo
+
+## -*- texinfo -*-
+## @deftypefn {Function File} {[@var{stuct}]} = prs_spice (@var{filename})
+##
+## Circuit file parser that can interpret a subset of the spice file format.
+##
+## @code{prs_spice} currently supports the following set of "Element Cards"
+## @itemize @minus
+## @item Capacitors:
+## @example
+## Cname n+ n- cvalue
+## @end example
+##
+## @item Diodes:
+## @example
+## Cname anode knode modelname <parameters>
+## @end example
+##
+## @item MOS:
+## @example
+## Mname gnode dnode snode bnode modelname <parameters>
+## @end example
+## 
+## N.B.: one instance of a MOS element MUST be preceeded (everywhere in the file) by the declaration of the related model.
+## For instance:
+## @example
+## .MODEL mynmos NMOS( k=1e-4 Vth=0.1 rd=1e6)
+## M2 Vgate 0 Vdrain 0 mynmos
+## @end example
+## 
+## @item Resistors:
+## @example
+## Rname n+ n- rvalue
+## @end example
+## 
+## @item Voltage sources:
+## @example
+## Vname n+ n- <dcvalue> <transvalue>
+## @end example
+## 
+## Transvalue specifies a transient voltage source
+## @example
+## SIN(VO  VA  FREQ TD  THETA)
+## @end example
+## where:
+## @itemize @bullet
+## @item VO    (offset)
+## @item VA    (amplitude)
+## @item FREQ  (frequency)
+## @item TD    (delay)
+## @item THETA (damping factor)
+## @end itemize
+##
+## @itemize @bullet
+## @item 0 to TD: V0 
+## @item TD to TSTOP:  
+## VO  + VA*exp(-(time-TD)*THETA)*sine(twopi*FREQ*(time+TD))
+## @end itemize
+## 
+## Currently the damping factor has no effect.
+## 
+## Pulse
+## @example
+## PULSE(V1 V2 TD TR  TF  PW  PER)
+## @end example
+## 
+## parameters meaning
+## @itemize @bullet
+## @item V1         (initial value)
+## @item V2         (pulsed value)
+## @item TD         (delay time)
+## @item TR         (rise  time)
+## @item TF         (fall time)
+## @item PW         (pulse width)
+## @item PER        (period)
+## @end itemize 
+## 
+## Currently rise and fall time are not implemented yet.
+## 
+## @item .MODEL cards
+## Defines a model for semiconductor devices
+## 
+## @example
+## .MODEL MNAME TYPE(PNAME1=PVAL1 PNAME2=PVAL2 ... )
+## @end example
+## 
+## TYPE can be:
+## @itemize @bullet
+## @item NMOS N-channel MOSFET model
+## @item PMOS P-channel MOSFET model
+## @item D    diode model
+## @end itemize
+## 
+## The parameter "LEVEL" is currently assigned to the field "section" in the call
+## of the element functions by the solver.
+## Currently supported values for the parameter LEVEL for NMOS and PMOS are:
+## @itemize @bullet
+## @item simple
+## @item lincap
+## @end itemize
+## (see documentation of function Mdiode).
+## 
+## Currently supported values for the parameter LEVEL for D are:
+## @itemize @bullet
+## @item simple
+## @end itemize
+## (see documentation of functions Mnmosfet and Mpmosfet).
+## 
+## @end itemize
+## @seealso{prs_iff,Mdiode,Mnmosfet,Mpmosfet}
+## @end deftypefn
 
 function outstruct = prs_spice (name)
-
-  ## -*- texinfo -*-
-  ## @deftypefn {Function File} @
-  ## {[@var{stuct}]} = prs_spice (@var{filename})
-  ## @end deftypefn
 
   ## Check input
   if (nargin != 1 || !ischar (name))

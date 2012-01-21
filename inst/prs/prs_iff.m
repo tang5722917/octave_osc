@@ -13,8 +13,7 @@
 ## GNU General Public License for more details.
 ##
 ## You should have received a copy of the GNU General Public License
-## along with this program (see the file LICENSE); if not,
-## see <http://www.gnu.org/licenses/>.
+## along with OCS; If not, see <http://www.gnu.org/licenses/>.
 ##
 ## author: Carlo de Falco     <cdf _AT_ users.sourceforge.net> 
 ## author: Massimiliano Culpo <culpo _AT_ users.sourceforge.net>
