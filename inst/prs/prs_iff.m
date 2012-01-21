@@ -64,7 +64,7 @@
 ##
 ## See the @cite{IFF file format specifications} for details about 
 ## the output structures.
-##
+## @seealso{prs_spice}
 ## @end deftypefn
 
 function outstruct = prs_iff(name)
