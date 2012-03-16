@@ -222,7 +222,7 @@ void pmos(ColumnVector extvar, double mu0,   double Cox,     double W,
 DEFUN_DLD(Mshichmanhodgesmosfet,args,nargout,
 "-*- texinfo -*-\n\
 \n\
-@deftypefn{Function File} @\n\
+@deftypefn{Loadable Function} @\n\
 {[@var{a},@var{b},@var{c}]=} Mshichmanhodgesmosfet@\n\
 (@var{string}, @var{parameters}, @var{parameternames}, @\n\
 @var{extvar},@var{intvar},@var{t})\n\
