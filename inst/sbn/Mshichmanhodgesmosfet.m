@@ -84,7 +84,7 @@ function [a,b,c]= Mshichmanhodgesmosfet (string,parameters,parameternames,extvar
 		num2str(parameters(ii)) " ;"])	
 	endfor
 
-	[gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = \
+	[gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = ...
 	    nmos(extvar,mu0,Cox,W,L,Vth,rd,Tshift);
 
 	vg   = extvar(1);
@@ -104,26 +104,26 @@ function [a,b,c]= Mshichmanhodgesmosfet (string,parameters,parameternames,extvar
 	Qdb  = intvar(5);
 	
 	a11 = a21 = a22 = zeros(5,5);
-	a12 = [ 1  1  1  0  0; \
-	       0 -1  0  1  0; \
-	       0  0 -1  0  1; \
-	       -1  0  0 -1 -1; \
+	a12 = [ 1  1  1  0  0; ...
+	       0 -1  0  1  0; ...
+	       0  0 -1  0  1; ...
+	       -1  0  0 -1 -1; ...
 	       0  0  0  0  0];
 
 	a   = [a11 a12; a21 a22];
 
-	b11 = [0        0                0      0     0; \
-	       -gm      (gm+gd)         -gd     0 -didT; \
-	       gm      -(gm+gd)          gd     0  didT; \
-	       0        0                0      0     0; \
+	b11 = [0        0                0      0     0; ...
+	       -gm      (gm+gd)         -gd     0 -didT; ...
+	       gm      -(gm+gd)          gd     0  didT; ...
+	       0        0                0      0     0; ...
 	       dPdvgs  -(dPdvgs+dPdvds)  dPdvds 0  dPdT];
 
 	b12 = zeros(5,5);
 
-	b21 = [Cgb  0        0   -Cgb  0; \
-	       Cgs -Cgs      0    0    0; \
-	       Cgd  0       -Cgd  0    0; \
-	       0    Csb      0   -Csb  0; \
+	b21 = [Cgb  0        0   -Cgb  0; ...
+	       Cgs -Cgs      0    0    0; ...
+	       Cgd  0       -Cgd  0    0; ...
+	       0    Csb      0   -Csb  0; ...
 	       0    0        Cdb -Cdb  0];
 	b22 = -eye(5);
 
@@ -132,10 +132,10 @@ function [a,b,c]= Mshichmanhodgesmosfet (string,parameters,parameternames,extvar
 	
 	c1 = [0; -ids; ids; 0; P];
 
-	c2 = [Cgb*(vg - vb) - Qgb;\
-	      Cgs*(vg - vs) - Qgs;\
-	      Cgd*(vg - vd) - Qgd;\
-	      Csb*(vs - vb) - Qsb;\
+	c2 = [Cgb*(vg - vb) - Qgb;...
+	      Cgs*(vg - vs) - Qgs;...
+	      Cgd*(vg - vd) - Qgd;...
+	      Csb*(vs - vb) - Qsb;...
 	      Cdb*(vd - vb) - Qdb];
 	
 	c = [c1;c2];
@@ -160,7 +160,7 @@ function [a,b,c]= Mshichmanhodgesmosfet (string,parameters,parameternames,extvar
 		num2str(parameters(ii)) " ;"])	
 	endfor
 
-	[gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = \
+	[gm,gd,ids,didT,P,dPdT,dPdvgs,dPdvds] = ...
 	    pmos(extvar,mu0,Cox,W,L,Vth,rd,Tshift);
 
 	
@@ -181,26 +181,26 @@ function [a,b,c]= Mshichmanhodgesmosfet (string,parameters,parameternames,extvar
 	Qdb  = intvar(5);
 	
 	a11 = a21 = a22 = zeros(5,5);
-	a12 = [ 1  1  1  0  0; \
-	       0 -1  0  1  0; \
-	       0  0 -1  0  1; \
-	       -1  0  0 -1 -1; \
+	a12 = [ 1  1  1  0  0; ...
+	       0 -1  0  1  0; ...
+	       0  0 -1  0  1; ...
+	       -1  0  0 -1 -1; ...
 	       0  0  0  0  0];
 
 	a   = [a11 a12; a21 a22];
 	
-	b11 = [0        0                0      0     0; \
-	       -gm      (gm+gd)         -gd     0 -didT; \
-	       gm      -(gm+gd)          gd     0  didT; \
-	       0        0                0      0     0; \
+	b11 = [0        0                0      0     0; ...
+	       -gm      (gm+gd)         -gd     0 -didT; ...
+	       gm      -(gm+gd)          gd     0  didT; ...
+	       0        0                0      0     0; ...
 	       dPdvgs  -(dPdvgs+dPdvds)  dPdvds 0  dPdT];
 
 	b12 = zeros(5,5);
 
-	b21 = [Cgb  0        0   -Cgb  0; \
-	       Cgs -Cgs      0    0    0; \
-	       Cgd  0       -Cgd  0    0; \
-	       0    Csb      0   -Csb  0; \
+	b21 = [Cgb  0        0   -Cgb  0; ...
+	       Cgs -Cgs      0    0    0; ...
+	       Cgd  0       -Cgd  0    0; ...
+	       0    Csb      0   -Csb  0; ...
 	       0    0        Cdb -Cdb  0];
 	
 	b22 = -eye(5);
@@ -210,10 +210,10 @@ function [a,b,c]= Mshichmanhodgesmosfet (string,parameters,parameternames,extvar
 	
 	c1 = [0; -ids; ids; 0; P];
 
-	c2 = [Cgb*(vg - vb) - Qgb;\
-	      Cgs*(vg - vs) - Qgs;\
-	      Cgd*(vg - vd) - Qgd;\
-	      Csb*(vs - vb) - Qsb;\
+	c2 = [Cgb*(vg - vb) - Qgb;...
+	      Cgs*(vg - vs) - Qgs;...
+	      Cgd*(vg - vd) - Qgd;...
+	      Csb*(vs - vb) - Qsb;...
 	      Cdb*(vd - vb) - Qdb];
 	
 	c = [c1;c2];

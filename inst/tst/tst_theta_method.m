@@ -56,7 +56,7 @@
 ##
 ## @end deftypefn
 
-function [out, varargout] = tst_theta_method(outstruct,x,t,tol,maxit,\
+function [out, varargout] = tst_theta_method(outstruct,x,t,tol,maxit,...
 					     theta,pltvars,verbosity)
 
   ## Check input
@@ -108,8 +108,8 @@ function [out, varargout] = tst_theta_method(outstruct,x,t,tol,maxit,\
 					  resold, theta, A1, Jac, res);
     UPDT = @(x) TSTTHETAFUNUP1 (outstruct, x, t(it));
     
-    [out(:,it),ii,resnrm] = nls_newton_raphson(out(:,it-1),RES,JAC,\ 
-					       tol, maxit,verbosity(1),\ 
+    [out(:,it),ii,resnrm] = nls_newton_raphson(out(:,it-1),RES,JAC,...
+					       tol, maxit,verbosity(1),...
 					       UPDT);
     
     if nargout > 1

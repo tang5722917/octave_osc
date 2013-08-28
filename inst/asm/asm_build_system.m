@@ -64,7 +64,7 @@ function  [A,Jac,res] = asm_build_system(instruct,x,t);
       
       ## Evaluate element
       if instruct.NLC(ibl).nintvar(iel)    
-	intvars = instruct.totextvar+instruct.NLC(ibl).osintvar(iel) + \
+	intvars = instruct.totextvar+instruct.NLC(ibl).osintvar(iel) + ...
 	    [1:instruct.NLC(ibl).nintvar(iel)]';
       else
 	intvars=[];
@@ -78,10 +78,10 @@ function  [A,Jac,res] = asm_build_system(instruct,x,t);
       
       z = x(intvars);
 
-      [a,b,c] = feval(instruct.NLC(ibl).func,\
-		      instruct.NLC(ibl).section,\
-		      instruct.NLC(ibl).pvmatrix(iel,:),\
-		      instruct.NLC(ibl).parnames,\
+      [a,b,c] = feval(instruct.NLC(ibl).func,...
+		      instruct.NLC(ibl).section,...
+		      instruct.NLC(ibl).pvmatrix(iel,:),...
+		      instruct.NLC(ibl).parnames,...
 		      y,z,t);
 
       ## Assemble matrices

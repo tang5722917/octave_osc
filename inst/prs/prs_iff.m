@@ -76,8 +76,8 @@ function outstruct = prs_iff(name)
 
   ## Initialization
   version ="0.1b1";
-  outstruct = struct("NLC",[],\
-                     "LCR",[],\
+  outstruct = struct("NLC",[],...
+                     "LCR",[],...
                      "totextvar",0);
   
   ## Open cir file
@@ -120,7 +120,7 @@ function outstruct = prs_iff(name)
     ## parse NLC block
     [outstruct,intvar] = parseNLCblock(fid,line,outstruct,NLCcount,intvar);
 
-    ndsvec = [ndsvec ; \
+    ndsvec = [ndsvec ; ...
 	      outstruct.NLC(NLCcount).vnmatrix(:)];
 
     ## skip the newline char after the matrix
@@ -151,7 +151,7 @@ function outstruct = prs_iff(name)
     ## parse block header
     [outstruct,intvar] = parseLCRblock(fid,line,outstruct,LCRcount,intvar);
     
-    ndsvec = [ndsvec ; \
+    ndsvec = [ndsvec ; ...
 	      outstruct.LCR(LCRcount).vnmatrix(:)];
     
     ## skip the newline char after the matrix
@@ -250,7 +250,7 @@ function [outstruct,intvar] = parseNLCblock(fid,line,outstruct,NLCcount,intvar);
   ## Compute internal variables cycling over each 
   ## element in the section
   for iel = 1:nrows
-    [a,b,c] = feval(func,section,outstruct.NLC(NLCcount).pvmatrix(iel,:),\
+    [a,b,c] = feval(func,section,outstruct.NLC(NLCcount).pvmatrix(iel,:),...
 		    outstruct.NLC(NLCcount).parnames,zeros(nextvar,1),[],0);
 
     ## FIXME: if all the element in the same section share the
@@ -297,7 +297,7 @@ function [outstruct,intvar] = parseLCRblock(fid,line,outstruct,LCRcount,intvar);
   ## Compute internal variables cycling over each 
   ## element in the section
   for iel = 1:nrows
-    [a,b,c] = feval(func,section,outstruct.LCR(LCRcount).pvmatrix(iel,:),\
+    [a,b,c] = feval(func,section,outstruct.LCR(LCRcount).pvmatrix(iel,:),...
 		    outstruct.LCR(LCRcount).parnames,zeros(nextvar,1),[],0);
 
     ## FIXME: if all the element in the same section share the

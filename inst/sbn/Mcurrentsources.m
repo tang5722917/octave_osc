@@ -81,9 +81,9 @@ function [a,b,c] = Mcurrentsources (string,parameters,parameternames,extvar,intv
       endfor
       
       a = zeros(4);
-      b = [0  0  K -K;\
-	   0  0 -K  K;\
-	   0  0  0  0;\
+      b = [0  0  K -K;...
+	   0  0 -K  K;...
+	   0  0  0  0;...
 	   0  0  0  0];
       c = zeros(4,1);
     ## NLC part
@@ -110,9 +110,9 @@ function [a,b,c] = Mcurrentsources (string,parameters,parameternames,extvar,intv
       dIdv = 2*K*dv;
       
       a = zeros(4);
-      b = [0  0  dIdv -dIdv;\
-	   0  0 -dIdv  dIdv;\
-	   0  0     0     0;\
+      b = [0  0  dIdv -dIdv;...
+	   0  0 -dIdv  dIdv;...
+	   0  0     0     0;...
 	   0  0     0     0];
       c = [I -I 0 0];
 

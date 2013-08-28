@@ -61,7 +61,7 @@
 ##
 ## @end deftypefn
 
-function [out, tout] = tst_odepkg (outstruct,x,t,tol,maxit,\
+function [out, tout] = tst_odepkg (outstruct,x,t,tol,maxit,...
 				   pltvars,solver,verbosity,odestruct)
 
   ## Check input

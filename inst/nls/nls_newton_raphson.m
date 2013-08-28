@@ -47,7 +47,7 @@
 ## @seealso{nls_stationary,tst_backward_euler,tst_theta_method,tst_daspk,tst_odepkg}
 ## @end deftypefn 
 
-function [y,ii,resnrm] = nls_newton_raphson(y0,RES,JAC,tol,maxit,\
+function [y,ii,resnrm] = nls_newton_raphson(y0,RES,JAC,tol,maxit,...
 					    verbosity,update);
 
   ## Check input
