@@ -58,7 +58,8 @@
 ## @end deftypefn
 
 
-function [a,b,c] =Mresistors(string,parameters,parameternames,extvar,intvar,t)
+function [a,b,c] = Mresistors (string, parameters, parameternames,
+                               extvar, intvar, t)
   
   switch string 
     ## LCR part

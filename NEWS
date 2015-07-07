@@ -1,0 +1,6 @@
+Summary of important user-visible changes for ocs 0.1.4:
+-------------------------------------------------------------------
+
+ ** Fixed a few incompatibilities with Octave 4.0 and warnings about
+    use of deprecated syntax.
+

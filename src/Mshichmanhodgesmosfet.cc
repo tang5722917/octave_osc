@@ -75,7 +75,7 @@ void set_parameters(ColumnVector parameters,  string_vector parameternames,
 		    double* Cox, double* Cgs, double* Cgd, double* Cgb, double* Csb,
 		    double* Cdb, double* Tshift)
 {
-  octave_idx_type nnames = parameternames.length();
+  octave_idx_type nnames = parameternames.numel ();
   octave_idx_type niter  = 0;
   //FIXME: it should be better to use Octave_map<string,value> for parameters
   while (niter < nnames)
