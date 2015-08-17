@@ -124,7 +124,7 @@ void nmos(ColumnVector extvar, double mu0,   double Cox,     double W,
   double T    = extvar(4); // Temperature
 
   double k    = mu0*Cox*pow((T + Tshift)/300.0,-3.0/2.0)*W/L;
-  double dkdT = mu0*Cox*W*(-3.0/2)*xpow((T + Tshift)/300.0,-5.0/2.0 )*(1.0/300.0)/L;
+  double dkdT = mu0*Cox*W*(-3.0/2)*std::pow((T + Tshift)/300.0,-5.0/2.0 )*(1.0/300.0)/L;
   
   double vgs  = vg - vs;
   double vds  = vd - vs;
@@ -138,10 +138,10 @@ void nmos(ColumnVector extvar, double mu0,   double Cox,     double W,
     }  
   else if ( ( (vgs-Vth)>= vds ) && (vds>=0))
     {
-      *ids  = k*((vgs-Vth)*vds - xpow(vds,2)/2 ) + vds/rd;
+      *ids  = k*((vgs-Vth)*vds - std::pow(vds,2)/2 ) + vds/rd;
       *gm   = k*vds;
       *gd   = k*(vgs-Vth-vds) + (1/rd);
-      *didT = dkdT*((vgs-Vth)*vds-(xpow(vds,2))/2);
+      *didT = dkdT*((vgs-Vth)*vds-(std::pow(vds,2))/2);
     }  
   else if (((vgs-Vth)>=(vds))&&(vds<0))
     {  
@@ -152,10 +152,10 @@ void nmos(ColumnVector extvar, double mu0,   double Cox,     double W,
     }  
   else // (i.e. if 0 <= vgs-vth <= vds)
     {  
-      *ids = (k/2)*xpow((vgs-Vth),2) + vds/rd;
+      *ids = (k/2)*std::pow((vgs-Vth),2) + vds/rd;
       *gm  = k*(vgs-Vth);
       *gd  = 1/rd;
-      *didT= (dkdT/(2))*xpow((vgs-Vth),2);
+      *didT= (dkdT/(2))*std::pow((vgs-Vth),2);
     }  
 
   *P       = -(*ids)*vds;
@@ -177,8 +177,8 @@ void pmos(ColumnVector extvar, double mu0,   double Cox,     double W,
   double vb   = extvar(3); // V-bulk
   double T    = extvar(4); // Temperature
 
-  double k    = - mu0*Cox*xpow((T + Tshift)/300.0,-3.0/2.0)*W/L;
-  double dkdT = - mu0*Cox*W*(-3.0/2.0)*xpow((T + Tshift)/300.0,-5.0/2.0 )*(1.0/300.0)/L;
+  double k    = - mu0*Cox*std::pow((T + Tshift)/300.0,-3.0/2.0)*W/L;
+  double dkdT = - mu0*Cox*W*(-3.0/2.0)*std::pow((T + Tshift)/300.0,-5.0/2.0 )*(1.0/300.0)/L;
 
   double vgs  = vg - vs;
   double vds  = vd - vs;
@@ -192,10 +192,10 @@ void pmos(ColumnVector extvar, double mu0,   double Cox,     double W,
     }  
   else if ( ( (vgs-Vth)<= vds ) && (vds<=0))
     {
-      *ids  = k*((vgs-Vth)*vds - xpow(vds,2)/2 ) + vds/rd;
+      *ids  = k*((vgs-Vth)*vds - std::pow(vds,2)/2 ) + vds/rd;
       *gm   = k*vds;
       *gd   = k*(vgs-Vth-vds) + (1/rd);
-      *didT = dkdT*((vgs-Vth)*vds-(xpow(vds,2))/2);
+      *didT = dkdT*((vgs-Vth)*vds-(std::pow(vds,2))/2);
     }  
   else if (((vgs-Vth)<=(vds))&&(vds>0))
     {  
@@ -206,10 +206,10 @@ void pmos(ColumnVector extvar, double mu0,   double Cox,     double W,
     }  
   else // (i.e. if 0 <= vgs-vth <= vds)
     {  
-      *ids = (k/2)*xpow((vgs-Vth),2) + vds/rd;
+      *ids = (k/2)*std::pow((vgs-Vth),2) + vds/rd;
       *gm  = k*(vgs-Vth);
       *gd  = 1/rd;
-      *didT= (dkdT/(2))*xpow((vgs-Vth),2);
+      *didT= (dkdT/(2))*std::pow((vgs-Vth),2);
     }  
 
   *P       = -(*ids)*vds;
