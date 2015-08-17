@@ -4,6 +4,7 @@ Matrix Assembly Functions
   asm_build_system
 Netlist Parsing Functions
   prs_iff
+  prs_spice
 Time Stepping Functions
   tst_backward_euler
   tst_daspk
@@ -25,4 +26,4 @@ SuBNet Function Library
   Mresistors
   Mshichmanhodgesmosfet
   Mvoltagesources
-
+  Mpdesympnjunct
